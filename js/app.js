@@ -66,6 +66,7 @@ function newGame(difficultyKey) {
     startedAt: Date.now(),
     paused: false,
     finished: false,
+    timerStarted: false,
     history: [],
   };
   selected = null;
@@ -90,6 +91,7 @@ function loadGame() {
   if (!raw || !raw.puzzle) return false;
   state = {
     ...raw,
+    timerStarted: raw.timerStarted ?? true, // older saves: assume already running
     notes: raw.notes.map((row) => row.map((arr) => new Set(arr))),
   };
   return true;
@@ -120,7 +122,7 @@ function undo() {
 function startTimer() {
   stopTimer();
   timerInterval = setInterval(() => {
-    if (state && !state.paused && !state.finished) {
+    if (state && state.timerStarted && !state.paused && !state.finished) {
       state.seconds++;
       renderMeta();
       if (state.seconds % 5 === 0) persist();
@@ -149,6 +151,8 @@ function enterValue(val) {
   if (!state || !selected || state.paused || state.finished) return;
   const { row, col } = selected;
   if (state.givens[row][col]) return;
+
+  if (!state.timerStarted) state.timerStarted = true;
 
   pushHistory();
 
@@ -203,6 +207,7 @@ function giveHint() {
   if (!state || state.paused || state.finished) return;
   const move = Sudoku.findGentlestMove(state.grid, state.solution);
   if (!move) return;
+  if (!state.timerStarted) state.timerStarted = true;
   pushHistory();
   state.grid[move.row][move.col] = move.value;
   state.notes[move.row][move.col].clear();
