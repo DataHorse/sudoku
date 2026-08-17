@@ -1,11 +1,11 @@
-/* Inkwell Sudoku — app controller */
+/* Sudoku — app controller */
 
 const STORAGE_KEY = "inkwell-sudoku-state-v1";
 const STATS_KEY = "inkwell-sudoku-stats-v1";
 const SETTINGS_KEY = "inkwell-sudoku-settings-v1";
 
 const defaultSettings = {
-  theme: "system", // light | dark | system
+  theme: "dark", // light | dark | system
   difficulty: "easy",
   highlightMistakes: true,
   highlightPeers: true,
@@ -287,6 +287,7 @@ function renderBoard() {
 
       if (val !== 0) {
         cell.textContent = val;
+        cell.classList.add(`num-${val}`);
       } else if (state.notes[r][c].size > 0) {
         const notesGrid = document.createElement("div");
         notesGrid.className = "notes-grid";
@@ -314,6 +315,7 @@ function renderNumpad() {
   }
   for (let n = 1; n <= 9; n++) {
     const btn = document.createElement("button");
+    btn.classList.add(`num-${n}`);
     const remaining = 9 - counts[n];
     btn.innerHTML = `${n}<span class="remaining">${remaining > 0 ? remaining : ""}</span>`;
     if (remaining <= 0) btn.classList.add("exhausted");
@@ -347,6 +349,25 @@ function showWinOverlay() {
     Sudoku.DIFFICULTIES[state.difficulty]?.label || state.difficulty;
   document.getElementById("winOverlay").classList.add("active");
   buzzSuccess();
+  confettiBurst();
+}
+
+const CONFETTI_COLORS = ["#ff6b6b", "#ff9f43", "#ffca3a", "#8ac926", "#36c9a3", "#4dabf7", "#7c5cfc", "#d966e0", "#ff5c8a"];
+
+function confettiBurst() {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const count = 60;
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti-piece";
+    piece.style.left = `${Math.random() * 100}vw`;
+    piece.style.background = CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)];
+    piece.style.animationDuration = `${1.8 + Math.random() * 1.6}s`;
+    piece.style.animationDelay = `${Math.random() * 0.4}s`;
+    piece.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 4000);
+  }
 }
 function closeWinOverlay() {
   document.getElementById("winOverlay").classList.remove("active");
@@ -400,7 +421,7 @@ function applyTheme() {
   document.documentElement.setAttribute("data-theme", mode);
   document
     .querySelector('meta[name="theme-color"]')
-    ?.setAttribute("content", mode === "dark" ? "#1b2430" : "#f6efe0");
+    ?.setAttribute("content", mode === "dark" ? "#241d3f" : "#fff8ec");
 }
 
 /* ---------------- Tabs ---------------- */

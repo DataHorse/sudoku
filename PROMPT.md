@@ -1,4 +1,4 @@
-# Build Prompt: "Inkwell Sudoku" — a full-featured, installable Sudoku PWA
+# Build Prompt: "Sudoku" — a full-featured, installable, kid-friendly Sudoku PWA
 
 Use this prompt as the spec if you ever want to regenerate, extend, or hand this project to
 another builder (human or AI).
@@ -52,17 +52,21 @@ visible, not just described.
 - Reset stats / reset all data.
 
 ## Design direction
-A "puzzle atelier" aesthetic — feels like a beautifully made paper puzzle book turned into a
-crisp modern app, not a generic template:
-- Palette: ink navy, warm parchment, brass/gold accent, pine teal (correct/success), soft
-  clay-red (mistakes) — named hex tokens, not defaults.
-- Type: a characterful serif for headings, a clean grounded sans for UI/body text, and — as the
-  signature detail — an actual **handwritten-style font for pencil-mark notes**, so notes look
-  like real pencil marks next to bold confident "ink" for placed numbers.
-- Bottom tab navigation (Play / Learn / Tactics / Stats / Settings) — native app feel on mobile.
-- Thick brass box borders / thin ink grid lines on the board itself, the signature visual element.
+A bright, playful "friendly puzzle box" aesthetic aimed at kids and beginners, not a muted
+grown-up template:
+- Palette: sunshine cream background, candy-bright purple/pink/orange/yellow accents, a
+  cheerful rainbow color assigned to each digit 1–9 (used on the number pad and entered
+  numbers) so kids connect numbers with colors — named hex tokens, not defaults.
+- Type: a bouncy rounded display font for headings/numbers/buttons, a friendly rounded sans
+  for body text, and — as the signature detail — an actual **handwritten-style font for
+  pencil-mark notes**, so notes look like a kid's real pencil marks.
+- Bottom tab navigation (Play / Learn / Tactics / Stats / Settings) with playful emoji icons —
+  native app feel on mobile.
+- Chunky rounded board border, bold rounded buttons with a "pressable" drop-shadow that
+  flattens on tap, and a confetti celebration on solving a puzzle.
 - Full responsiveness: iPhone SE up to iPad Pro landscape; safe-area padding for notches/home
   indicators; visible keyboard focus states; respects prefers-reduced-motion.
+- Footer copyright line: "© Copyright Data Horse" on the Settings screen.
 
 ## Technical / hosting requirements
 - Static site: `index.html`, `css/`, `js/`, `icons/`, `manifest.json`, `service-worker.js`.

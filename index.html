@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
-<title>Inkwell Sudoku</title>
-<meta name="description" content="A beautiful, installable Sudoku app with lessons, tactics, and five difficulty levels." />
+<title>Sudoku</title>
+<meta name="description" content="A colorful, playful Sudoku app for learning — with lessons, tactics, and five difficulty levels." />
 
 <!-- PWA -->
 <link rel="manifest" href="./manifest.json" />
-<meta name="theme-color" content="#f6efe0" />
+<meta name="theme-color" content="#241d3f" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Inkwell" />
+<meta name="apple-mobile-web-app-title" content="Sudoku" />
 <link rel="apple-touch-icon" href="./icons/icon-192.png" />
 <link rel="icon" href="./icons/icon-192.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="./css/style.css" />
 </head>
@@ -26,13 +26,13 @@
 <div class="app-shell">
 
   <div class="topbar">
-    <div class="brand"><span class="mark"></span>Inkwell Sudoku</div>
+    <div class="brand"><span class="mark">🦊</span>Sudoku</div>
   </div>
 
   <!-- ============ PLAY ============ -->
   <section id="view-play" class="view active">
     <div class="new-game-row">
-      <button class="btn btn-primary" id="newGameBtnPlay">New puzzle</button>
+      <button class="btn btn-primary" id="newGameBtnPlay">🎲 New puzzle</button>
       <button class="icon-btn" id="pauseBtn" title="Pause" aria-label="Pause">⏸</button>
     </div>
 
@@ -66,21 +66,21 @@
 
   <!-- ============ LEARN ============ -->
   <section id="view-learn" class="view">
-    <h2 class="section-heading">Learn to play</h2>
-    <p class="section-sub">Never played Sudoku before? Start here — six short steps.</p>
+    <h2 class="section-heading">Learn to play 🌟</h2>
+    <p class="section-sub">New to Sudoku? Start here — six easy steps and you'll be a pro!</p>
     <div id="learnList"></div>
   </section>
 
   <!-- ============ TACTICS ============ -->
   <section id="view-tactics" class="view">
-    <h2 class="section-heading">Tactics</h2>
-    <p class="section-sub">The solving techniques that take you from stuck to solved, with worked examples.</p>
+    <h2 class="section-heading">Tactics 🕵️</h2>
+    <p class="section-sub">Puzzle-solving tricks that turn "stuck" into "solved," with fun examples.</p>
     <div id="tacticsList"></div>
   </section>
 
   <!-- ============ STATS ============ -->
   <section id="view-stats" class="view">
-    <h2 class="section-heading">Your stats</h2>
+    <h2 class="section-heading">Your stats 📈</h2>
     <p class="section-sub">Tracked on this device only.</p>
     <div class="stat-grid">
       <div class="stat-tile"><strong id="statPlayed">0</strong><span>Played</span></div>
@@ -149,13 +149,15 @@
     </div>
   </section>
 
+  <div class="copyright">© Copyright Data Horse</div>
+
 </div>
 
 <!-- Win overlay -->
 <div class="overlay" id="winOverlay">
   <div class="overlay-card">
     <div class="trophy">🏆</div>
-    <h2>Solved!</h2>
+    <h2>You did it! 🎉</h2>
     <div class="overlay-stats">
       <div><strong id="winTime">0:00</strong><span>Time</span></div>
       <div><strong id="winMistakes">0</strong><span>Mistakes</span></div>
@@ -171,11 +173,11 @@
 <!-- Bottom tab bar -->
 <nav class="tabbar">
   <div class="tabbar-inner">
-    <button class="tab-btn active" data-tab="play"><span class="glyph">▦</span>Play</button>
-    <button class="tab-btn" data-tab="learn"><span class="glyph">📖</span>Learn</button>
-    <button class="tab-btn" data-tab="tactics"><span class="glyph">♟</span>Tactics</button>
-    <button class="tab-btn" data-tab="stats"><span class="glyph">📊</span>Stats</button>
-    <button class="tab-btn" data-tab="settings"><span class="glyph">⚙</span>Settings</button>
+    <button class="tab-btn active" data-tab="play"><span class="glyph">🧩</span>Play</button>
+    <button class="tab-btn" data-tab="learn"><span class="glyph">📚</span>Learn</button>
+    <button class="tab-btn" data-tab="tactics"><span class="glyph">🎯</span>Tactics</button>
+    <button class="tab-btn" data-tab="stats"><span class="glyph">🏆</span>Stats</button>
+    <button class="tab-btn" data-tab="settings"><span class="glyph">⚙️</span>Settings</button>
   </div>
 </nav>
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = "inkwell-sudoku-v1";
+const CACHE_NAME = "sudoku-kids-v2";
 const ASSETS = [
   "./",
   "./index.html",
