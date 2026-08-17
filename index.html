@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+<title>Inkwell Sudoku</title>
+<meta name="description" content="A beautiful, installable Sudoku app with lessons, tactics, and five difficulty levels." />
+
+<!-- PWA -->
+<link rel="manifest" href="./manifest.json" />
+<meta name="theme-color" content="#f6efe0" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Inkwell" />
+<link rel="apple-touch-icon" href="./icons/icon-192.png" />
+<link rel="icon" href="./icons/icon-192.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+<div class="app-shell">
+
+  <div class="topbar">
+    <div class="brand"><span class="mark"></span>Inkwell Sudoku</div>
+  </div>
+
+  <!-- ============ PLAY ============ -->
+  <section id="view-play" class="view active">
+    <div class="new-game-row">
+      <button class="btn btn-primary" id="newGameBtnPlay">New puzzle</button>
+      <button class="icon-btn" id="pauseBtn" title="Pause" aria-label="Pause">⏸</button>
+    </div>
+
+    <div class="game-meta">
+      <div class="meta-chip" id="difficultyChip">🎯 <strong id="difficultyLabel">Easy</strong></div>
+      <div class="meta-chip" id="timerChip">⏱ <strong id="timerVal">0:00</strong></div>
+      <div class="meta-chip">✕ <strong id="mistakeVal">0</strong></div>
+    </div>
+
+    <div class="board-wrap">
+      <div class="board" id="board"></div>
+      <div class="overlay" id="pauseOverlay">
+        <div class="overlay-card">
+          <h2>Paused</h2>
+          <p>Take your time. The timer's stopped.</p>
+          <button class="btn btn-primary btn-block" id="resumeBtn">Resume</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="numpad" id="numpad"></div>
+
+    <div class="toolbar">
+      <button class="tool-btn" id="undoBtn"><span class="glyph">↶</span>Undo</button>
+      <button class="tool-btn" id="eraseBtn"><span class="glyph">⌫</span>Erase</button>
+      <button class="tool-btn" id="notesBtn"><span class="glyph">✎</span>Notes</button>
+      <button class="tool-btn" id="hintBtn"><span class="glyph">💡</span>Hint</button>
+      <button class="tool-btn" id="newGameBtn"><span class="glyph">↻</span>New</button>
+    </div>
+  </section>
+
+  <!-- ============ LEARN ============ -->
+  <section id="view-learn" class="view">
+    <h2 class="section-heading">Learn to play</h2>
+    <p class="section-sub">Never played Sudoku before? Start here — six short steps.</p>
+    <div id="learnList"></div>
+  </section>
+
+  <!-- ============ TACTICS ============ -->
+  <section id="view-tactics" class="view">
+    <h2 class="section-heading">Tactics</h2>
+    <p class="section-sub">The solving techniques that take you from stuck to solved, with worked examples.</p>
+    <div id="tacticsList"></div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section id="view-stats" class="view">
+    <h2 class="section-heading">Your stats</h2>
+    <p class="section-sub">Tracked on this device only.</p>
+    <div class="stat-grid">
+      <div class="stat-tile"><strong id="statPlayed">0</strong><span>Played</span></div>
+      <div class="stat-tile"><strong id="statWon">0</strong><span>Solved</span></div>
+      <div class="stat-tile"><strong id="statWinPct">0%</strong><span>Win rate</span></div>
+      <div class="stat-tile"><strong id="statStreak">0</strong><span>Current streak</span></div>
+    </div>
+    <h3>Best times</h3>
+    <div class="card best-times" id="bestTimesList"></div>
+  </section>
+
+  <!-- ============ SETTINGS ============ -->
+  <section id="view-settings" class="view">
+    <h2 class="section-heading">Settings</h2>
+
+    <h3>Difficulty for new puzzles</h3>
+    <div class="diff-row" id="diffRow"></div>
+
+    <h3>Appearance</h3>
+    <div class="card">
+      <div class="setting-row">
+        <div>
+          <div class="label">Theme</div>
+          <div class="sub">Match system, or set light/dark yourself</div>
+        </div>
+        <div class="segmented" id="themeSeg">
+          <button data-theme="light">Light</button>
+          <button data-theme="dark">Dark</button>
+          <button data-theme="system">Auto</button>
+        </div>
+      </div>
+    </div>
+
+    <h3>Gameplay</h3>
+    <div class="card">
+      <div class="setting-row">
+        <div><div class="label">Highlight mistakes</div><div class="sub">Outline numbers that conflict with the solution</div></div>
+        <label class="switch"><input type="checkbox" id="toggleMistakes" /><span class="slider"></span></label>
+      </div>
+      <div class="setting-row">
+        <div><div class="label">Highlight peers</div><div class="sub">Shade the selected cell's row, column, box &amp; matching numbers</div></div>
+        <label class="switch"><input type="checkbox" id="togglePeers" /><span class="slider"></span></label>
+      </div>
+      <div class="setting-row">
+        <div><div class="label">Show timer</div></div>
+        <label class="switch"><input type="checkbox" id="toggleTimer" /><span class="slider"></span></label>
+      </div>
+      <div class="setting-row">
+        <div><div class="label">Auto-clear notes</div><div class="sub">Remove pencil marks from peers when you place a number</div></div>
+        <label class="switch"><input type="checkbox" id="toggleAutoClear" /><span class="slider"></span></label>
+      </div>
+      <div class="setting-row">
+        <div><div class="label">Sound effects</div></div>
+        <label class="switch"><input type="checkbox" id="toggleSound" /><span class="slider"></span></label>
+      </div>
+      <div class="setting-row">
+        <div><div class="label">Haptics</div><div class="sub">Vibrate on mistakes &amp; wins (supported devices)</div></div>
+        <label class="switch"><input type="checkbox" id="toggleHaptics" /><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="danger-zone">
+      <h3>Data</h3>
+      <button class="btn btn-ghost btn-block" id="resetStatsBtn">Reset stats</button>
+      <button class="btn btn-danger btn-block" id="resetAllBtn">Erase all data</button>
+    </div>
+  </section>
+
+</div>
+
+<!-- Win overlay -->
+<div class="overlay" id="winOverlay">
+  <div class="overlay-card">
+    <div class="trophy">🏆</div>
+    <h2>Solved!</h2>
+    <div class="overlay-stats">
+      <div><strong id="winTime">0:00</strong><span>Time</span></div>
+      <div><strong id="winMistakes">0</strong><span>Mistakes</span></div>
+      <div><strong id="winDiff">Easy</strong><span>Difficulty</span></div>
+    </div>
+    <button class="btn btn-primary btn-block" id="winPlayAgainBtn">Play again</button>
+    <button class="btn btn-ghost btn-block" id="winCloseBtn">Close</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Bottom tab bar -->
+<nav class="tabbar">
+  <div class="tabbar-inner">
+    <button class="tab-btn active" data-tab="play"><span class="glyph">▦</span>Play</button>
+    <button class="tab-btn" data-tab="learn"><span class="glyph">📖</span>Learn</button>
+    <button class="tab-btn" data-tab="tactics"><span class="glyph">♟</span>Tactics</button>
+    <button class="tab-btn" data-tab="stats"><span class="glyph">📊</span>Stats</button>
+    <button class="tab-btn" data-tab="settings"><span class="glyph">⚙</span>Settings</button>
+  </div>
+</nav>
+
+<script src="./js/sudoku.js"></script>
+<script src="./js/content.js"></script>
+<script src="./js/app.js"></script>
+</body>
+</html>
